@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <body>
+        <h1>Hello, World!</h1>
+        <p>This is amazing!</p>
+        <p>Don't you think!?</p>
+        <script type="text/javascript">
+            console.log('Hello, console world');
+            
+            var count = 0;
+            
+            console.log(++count);
+            
+            console.log(6 == "6");
+            console.log(6 === "6");
+            console.log(6 === "6");
+            console.log("60" === "6" + 0);
+            console.log(String(6) === "6");
+            // objects are not primitives
+            console.log(new String(6) === "6");
+            
+            console.log(5 < 6 < 7); // resolve to true < 7
+            console.log(+true); // true coerces to 1 as a number
+            console.log(5 < 6 < 2); // so this is "true" too
+            
+            var thing = {};
+            console.log(thing.name);
+            thing.name = "Fred";
+            thing["count"] = 42;
+            thing.mistake = 9999;
+            console.log(thing);
+            delete thing.mistake;
+            console.log(thing);
+            
+            
+            
+        </script>
+    </body>
+</html>
