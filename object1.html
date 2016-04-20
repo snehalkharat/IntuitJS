@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <body>
+        <script type="text/javascript">
+            var toStringPersonLike =  function() {
+                if (arguments.length > 0) {
+                    console.log(arguments[0]);
+                }
+                return "person: name is " + this.name +
+                    " address is " + this.address +
+                    " creditLimit is " + this.creditLimit;
+            };
+            
+            var person = {
+                name: "Fred",
+                address: "123 Over Here St.",
+                creditLimit: 2000,
+                toString: toStringPersonLike,
+                setName: function(n) {
+                    this.name = n;
+                }
+            };
+            
+            console.log('I have a person, like this ' + person);
+            person.setName('Orinoco');
+            console.log('I have a person, like this ' + person);
+            
+            var someone = {
+                name: "Alfred", address: "Over There", creditLimit: 1000  
+            };
+            
+            console.log(toStringPersonLike.call(someone, "XXX"));
+            
+            var person2 = Object.create(person);
+            var person3 = Object.create(person);
+            
+            console.log(person2);
+            console.log(person3);
+        </script>
+    </body>
+</html>

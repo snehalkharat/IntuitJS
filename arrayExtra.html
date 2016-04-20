@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+    <body>
+        <script type="text/javascript">
+            var data = [ 3, 9, 8 ];
+            
+            for (k in data) {
+                console.log('value at subscript ' + k + ' is ' + data[k]);
+            }
+            
+            [].__proto__.strange = " woops ";
+            for (k in data) {
+                console.log('value at subscript ' + k + ' is ' + data[k]);
+            }
+        </script>
+    </body>
+</html>
