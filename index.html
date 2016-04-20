@@ -32,6 +32,12 @@
             delete thing.mistake;
             console.log(thing);
             
+            for (var k in thing) {
+                // avoid "inherited" properties
+                if (thing.hasOwnProperty(k)) {
+                    console.log('key k has ' + thing[k]);
+                }
+            }
             
             
         </script>
