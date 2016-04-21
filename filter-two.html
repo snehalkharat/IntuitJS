@@ -10,6 +10,10 @@ function filterArray(a, criterion) {
     return rv;
 }
 
+function greaterThan(b, a) {
+    return a > b;
+}
+    
 function createGreaterThanComparator(threshold) {
     return function(v) {
         return v > threshold;
@@ -17,6 +21,11 @@ function createGreaterThanComparator(threshold) {
 }
 
 var numbers = [1,2,3,4,5,6,7,8,9,10 ];
+    
+console.log(filterArray(
+    numbers,
+    greaterThan.bind(this, 3))
+);
     
 console.log(filterArray(
     numbers,

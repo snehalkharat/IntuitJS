@@ -1,0 +1,142 @@
+<script>
+var birthdayLines = [
+    "Fred, Smith, 1, 26, 1955",
+    "Joe, Willy, 2, 19, 1945",
+    "Felicity, Keenes, 4, 7, 1995",
+    "Alice, Burns, 3, 22, 1986",
+    "Andrew, Smith, 1, 26, 1955",
+    "Fred, Smith, 1, 26, 1995",
+    "Sheila, Brook, 4, 19, 1986",
+    "Orinoco, Womble, 1, 19, 1986",
+    "Alice, Zelos, 3, 22, 1986",
+    "William, Smith, 1, 26, 1955",
+    "Alice, Anne, 3, 22, 1986",
+    "Fred, Smith, 1, 26, 1925",
+    "Toby, Varms, 3, 9, 2000"
+];
+var birthdayArray = [];
+
+var birthdayProt = {
+    firstName: "Unset",
+    lastName: "Unset",
+    day: 1,
+    month: 1,
+    year: 1,
+    toString: function () {
+        return 'name: ' + this.firstName + ' ' + this.lastName
+            + ', dob: ' + this.month + '/' + this.day + '/' + this.year;
+    }
+};
+
+function createBirthday(text) {
+    var fields = text.split(", ");
+    var rv = Object.create(birthdayProt);
+    rv.firstName = fields[0];
+    rv.lastName = fields[1];
+    rv.month = fields[2];
+    rv.day = fields[3];
+    rv.year = fields[4];
+    return rv;
+}
+
+for (var idx = 0; idx < birthdayLines.length; idx++) {
+    birthdayArray.push(createBirthday(birthdayLines[idx]));
+}
+
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+function orderByYear(a,b) {
+    return a.year - b.year;   
+}
+
+function orderByMonth(a,b) {
+    return a.month - b.month;   
+}
+
+function orderByDay(a,b) {
+    return a.day - b.day;   
+}
+    
+function orderByLastThenFirstName(a,b) {
+    var rv = orderByLastName(a,b);
+    if (rv === 0) rv = orderByFirstName(a,b);
+    return rv;
+}
+
+function orderByFirstName(a,b) {
+    return a.firstName.localeCompare(b.firstName);
+}
+
+function orderByOneThenAnother(f1, f2) {
+    return function(a,b) {
+        var rv = f1(a,b);
+        if (rv === 0) rv = f2(a,b);
+        return rv;
+    }
+}
+
+console.log('Sorted by lastName: ------------------')
+function orderByLastName(a,b) {
+    return a.lastName.localeCompare(b.lastName);
+}
+birthdayArray.sort(orderByLastName);
+    
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+    console.log('Sorted by date: ------------------')
+birthdayArray.sort(function(a,b){
+    var rv = a.year - b.year;
+    if (rv === 0) {
+        rv = a.month - b.month;
+    }
+    if (rv === 0) {
+        rv = a.day - b.day;
+    }
+    return rv;
+});
+    
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+function since1990(b) {
+    return b.year > 1990;
+}
+
+console.log('more recent than 1990' +
+            birthdayArray.filter(since1990));
+    
+function createRecencyCriterion(year) {
+    return function(b) {
+        return b.year > year;
+    }
+}
+    
+console.log('more recent than 1980 ' +
+           birthdayArray.filter(createRecencyCriterion(1980)));
+
+birthdayArray.sort(
+    orderByOneThenAnother(orderByLastName, orderByFirstName)
+    );
+
+console.log('sorted by last, first:');
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+birthdayArray.sort(
+    orderByOneThenAnother(orderByFirstName, 
+        orderByOneThenAnother(orderByLastName, orderByYear))
+    );
+
+console.log('sorted by first, last, year:');
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+
+</script>
