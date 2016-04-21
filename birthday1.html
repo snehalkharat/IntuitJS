@@ -1,0 +1,69 @@
+<script>
+var birthdayLines = [
+    "Fred, Smith, 1, 26, 1955",
+    "Joe, Willy, 2, 19, 1945",
+    "Alice, Burns, 3, 22, 1986",
+    "Sheila, Brook, 4, 19, 1986",
+    "Orinoco, Womble, 1, 19, 1986"
+];
+var birthdayArray = [];
+
+var birthdayProt = {
+    firstName: "Unset",
+    lastName: "Unset",
+    day: 1,
+    month: 1,
+    year: 1,
+    toString: function () {
+        return 'name: ' + this.firstName + ' ' + this.lastName
+            + ', dob: ' + this.month + '/' + this.day + '/' + this.year;
+    }
+};
+
+function createBirthday(text) {
+    var fields = text.split(", ");
+    var rv = Object.create(birthdayProt);
+    rv.firstName = fields[0];
+    rv.lastName = fields[1];
+    rv.month = fields[2];
+    rv.day = fields[3];
+    rv.year = fields[4];
+    return rv;
+}
+
+for (var idx = 0; idx < birthdayLines.length; idx++) {
+    birthdayArray.push(createBirthday(birthdayLines[idx]));
+}
+
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+    
+console.log('Sorted by lastName: ------------------')
+function orderByLastName(a,b) {
+    return a.lastName.localeCompare(b.lastName);
+}
+birthdayArray.sort(orderByLastName);
+    
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+    console.log('Sorted by date: ------------------')
+birthdayArray.sort(function(a,b){
+    var rv = a.year - b.year;
+    if (rv === 0) {
+        rv = a.month - b.month;
+    }
+    if (rv === 0) {
+        rv = a.day - b.day;
+    }
+    return rv;
+});
+    
+for (var idx = 0; idx < birthdayArray.length; idx++) {
+    console.log('> ' + birthdayArray[idx]);
+}
+
+</script>
