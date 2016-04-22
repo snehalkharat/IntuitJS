@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+    <body>
+        <input type="text" id="url">
+        <div id="myOutput"></div>
+        <script type="text/javascript">
+            function getDelayPromise(passthrough) {
+                return new Promise(function(resolve, reject) {
+                    setTimeout( 
+                        function(){
+                            var rand = Math.random();
+                            if (rand > 0.8) {
+                                resolve(passthrough);
+                            } else {
+                                reject("That failed...");
+                            }
+                        },
+                        Math.random() * 4000)
+                });
+            }
+            
+            function getTextFieldPromise(textField) {
+                return new Promise(function(resolve, reject){
+                    textField.addEventListener('keyup', function(e) {
+                        if (e.keyCode === 13) {
+                            resolve(textField.value);
+                        }
+                    });
+                });
+            }
+            
+            function getUrlLoadPromise(url) {
+                return new Promise(function(resolve, reject){
+                    var req = new XMLHttpRequest();
+                    req.open('GET', url);
+                    req.addEventListener('load', function(){
+                        if (req.status === 200) {
+                            resolve(req.responseText);
+                        } else {
+                            reject("HTTP failed: " + req.statusText);
+                        }
+                    });
+                    req.send();
+                });
+            }
+            
+            console.log('starting...');
+            getTextFieldPromise(document.getElementById('url'))
+                .then(getUrlLoadPromise)
+                .then(function(v){
+                    console.log('Data is loaded...');
+                    return v;
+                }).then(getDelayPromise)
+                .then(function(v){
+                    console.log('ok, I\'ll tell you what it is:\n' + v);    
+                }, function(v){
+                    console.log("Failed, reported: " + v);
+                    // return from reject handler is treated as success downstream..
+                    // It's a kind of "recovery" -- indeed, it really might be, 
+                    // you could be returning a promise for anoter alternative
+                    // HTTP request, for example
+                    return new Error("That broke"); 
+                }).then(function(v){
+                    if (v instanceof Error) {
+                        console.log('error, ignore this');
+                    } else {
+                        console.log("more downstream, v is " + v);
+                    }
+                });
+        </script>
+    </body>
+</html>
