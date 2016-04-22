@@ -1,0 +1,55 @@
+<script>
+    "use strict";
+    let personProt = {
+        name: "undef",
+        age: 0,
+        toString: function() {
+            return 'Person: name=' + this.name +
+                ', age= ' + this.age;
+        }
+    };
+    
+    function createPerson(name, age) {
+        let rv = Object.create(personProt);
+        rv.name = name;
+        rv.age = age;
+        return rv;
+    }
+    let people = [
+        Object.create(personProt),
+        createPerson("Fred", 42),
+        createPerson("Jim", 19),
+        createPerson("Sheila", 64)
+    ];
+  
+    people.forEach(p=>console.log('> ' + p));
+    
+    personProt.name="Wilbur";
+    console.log('===============');
+    people.forEach(p=>console.log('> ' + p));
+
+    delete people[1].name;
+    console.log('===============');
+    people.forEach(p=>console.log('> ' + p));
+    
+//    personProt.toString = function() { 
+//        return "Well that's unhelpful!"
+//    };
+    
+    people[2].toString =  function() { 
+        return "Well aren't I special!";
+    };
+    console.log('===============');
+    people.forEach(p=>console.log('> ' + p));
+
+    console.log(people.filter(function(p){
+        return p.age > 20;
+    }));
+    
+    console.log('sum is ' 
+        + [9,3,7,2,4,6,1,4,7,9,3]
+        .filter(v=>v>7)
+        .map(v=>v*v)
+        .reduce((a,b)=>a+b));
+    
+</script>

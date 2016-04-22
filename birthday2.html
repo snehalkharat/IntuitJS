@@ -25,6 +25,16 @@ var birthdayProt = {
     toString: function () {
         return 'name: ' + this.firstName + ' ' + this.lastName
             + ', dob: ' + this.month + '/' + this.day + '/' + this.year;
+    },
+    createYoungerThanMeCriterion: function() {
+        console.log('generating criterion function ' + this);
+        var self = this;
+        return function(you) {
+            console.log('in criterion function this ' + this);
+            console.log('in criterion function self ' + self);
+            console.log('in criterion function you  ' + you);
+            return you.year > self.year;
+        }
     }
 };
 
@@ -138,5 +148,7 @@ for (var idx = 0; idx < birthdayArray.length; idx++) {
     console.log('> ' + birthdayArray[idx]);
 }
 
-
+var me = birthdayArray[0];
+var comparator = me.createYoungerThanMeCriterion();
+comparator(birthdayArray[1]);
 </script>

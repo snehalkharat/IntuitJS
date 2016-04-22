@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <body>
+        <input type="text" id="url">
+        <div id="myOutput"></div>
+        <script type="text/javascript">
+            var url = document.getElementById("url");
+            url.addEventListener('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    var fileUrl = url.value;
+                    
+                    var loadNetwork = new Promise(
+                        function(resolve, reject){
+                        
+                        var req = new XMLHttpRequest();
+                        req.open('GET', fileUrl);
+                        req.addEventListener('load', function() {
+                            if (req.status === 200) {
+                                resolve('loaded ' + req.responseText);
+                            } else {
+                                reject("something failed");
+                            }
+                        });
+                        req.send();
+
+                    }).then(function(v) {
+                        console.log('stage 1...');
+                        return v;
+                    }).then(function(v) {
+                        console.log('stage 2. Data is ' + v);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

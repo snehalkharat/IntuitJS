@@ -1,0 +1,39 @@
+<script>
+"use strict";
+    class Person {
+        constructor(name, address) {
+            this.name = name;
+            this.address = address;
+        }
+        
+        toString() {
+            return 'ES6 person, name=' + this.name + ', address=' + this.addr;
+        }
+        
+        get addr() {
+            return this.address;
+        }
+        
+    }
+    
+    let p = new Person("Jim", "Over there");
+    console.log('> ' + p);
+    
+    console.log('p.addr is ' + p.addr);
+//    p.addr = "Closer to home";
+    
+    class Employee extends Person {
+        constructor(name, address, jobTitle) {
+            super(name, address);
+            this.jobTitle = jobTitle;
+        }
+        
+        toString() {
+            return super.toString() + ', Employee part: jobTitle = ' + this.jobTitle;
+        }
+    }
+    
+    p = new Employee('Sheila', "There", "Engineer");
+    console.log("> " + p);
+    
+</script>

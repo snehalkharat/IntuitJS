@@ -21,6 +21,7 @@
             
             function getTextFieldPromise(textField) {
                 return new Promise(function(resolve, reject){
+                    console.log('promise handler function started..');
                     textField.addEventListener('keyup', function(e) {
                         if (e.keyCode === 13) {
                             resolve(textField.value);
@@ -59,7 +60,7 @@
                     // It's a kind of "recovery" -- indeed, it really might be, 
                     // you could be returning a promise for anoter alternative
                     // HTTP request, for example
-                    return new Error("That broke"); 
+                   // return new Error("That broke"); 
                 }).then(function(v){
                     if (v instanceof Error) {
                         console.log('error, ignore this');

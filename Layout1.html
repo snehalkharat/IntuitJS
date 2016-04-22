@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <style type="text/css">
+            .red {
+                background-color: crimson;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <input type="text" id="myInput">
+        <br>
+        <input type="button" value="Click Me!" id="myButton">
+        <br>
+        <div id="myOutput" class="red">Unset...</div>
+        <script type="text/javascript">
+            var myButton = document.getElementById("myButton");
+            var myInput = document.getElementById("myInput");
+            var myOutput = document.getElementById("myOutput");
+            
+            console.log(myOutput.innerHTML);
+            myButton.value = "Please click gently";
+            myOutput.className = "";
+            
+            myOutput.innerHTML = "<table><tr><td>One</td><td>Un</td></tr><tr><td>Two</td><td>Deux</td></tr></table>";
+            myButton.addEventListener('click',function(e) {
+                console.log("I got clicked...");
+            });
+            
+        </script>
+    </body>
+</html>
