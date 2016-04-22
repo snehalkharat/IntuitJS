@@ -1,0 +1,72 @@
+<script>
+    "use strict";
+    
+    class Weird extends class { 
+                get address() {
+                    return "somewhere";
+                }
+            } 
+    {
+        get name() { return "really weird"; }
+        toString() {
+            return "Weird: " + this.name + ", " + this.address;
+        }
+    }
+    
+    console.log(new Weird().toString());
+    
+    let Named = (c) => class extends (c) {
+        showName() {
+            console.log('mixin name: ' + this.name);
+        }
+    };
+    
+    class Person {
+        constructor(name, address) {
+            this.name = name;
+            this.address = address;
+        }
+        toString() {
+            return 'Person, name=' + this.name +
+                ', address=' + this.address;
+        }
+    }
+    
+    class Business {
+        constructor(name, field) {
+            this.name = name;
+            this.field = field;
+        }
+        toString() {
+            return 'Business, name=' + this.name +
+                ', field=' + this.field;
+        }
+    }
+    
+//    var showName = function () {
+//        console.log('name is ' + this.name);
+//    }
+    class NamedPerson extends Named(Person) {}
+    class NamedBusiness extends Named(Business) {}
+    
+    var theNamed = [
+        new NamedPerson("Fred", "Here"),
+        new NamedBusiness("CostaPlenty", "Groceries")
+    ];
+    
+    for (let i = 0; i < theNamed.length; i++) {
+        console.log('> ' + theNamed[i]);
+    }
+    console.log('-----------------');
+//    for (let i = 0; i < theNamed.length; i++) {
+//        showName.bind(theNamed[i])();
+//    }
+
+//    theNamed[0].__proto__.showName = showName;
+//    theNamed[1].__proto__.showName = showName;
+
+    for (let i = 0; i < theNamed.length; i++) {
+        theNamed[i].showName();
+    }
+
+</script>
